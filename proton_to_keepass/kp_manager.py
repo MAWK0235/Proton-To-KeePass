@@ -84,10 +84,7 @@ class KeePassManager():
             else:
                 new_entry.set_custom_property("Additional URLs", safe_str(entry.add_urls[0]))
 
-        # === Here’s the important part: add all other data fields dynamically ===
-        # Assume `entry.raw_data` is a dict of all key-value pairs from ProtonPass raw entry data
-        # If your Entry class doesn't have raw_data, modify it to include it, or
-        # provide a method to expose all raw fields.
+        
 
         if hasattr(entry, "raw_data") and isinstance(entry.raw_data, dict):
             standard_keys = {"name", "username", "password", "urls", "note", "totp", "createtime", "modifytime", "add_urls"}
