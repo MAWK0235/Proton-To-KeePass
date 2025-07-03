@@ -1,71 +1,36 @@
-# Proton-To-KeePass
-Convert encrypted Proton Pass exports into encrypted KeePass databases (kdbx) for offline password vault backups.
+# Proton-To-KeePass (Enhanced Fork)
 
-## Requirements
+Convert your **Proton Pass** vault into a secure, offline **KeePass KDBX** file – with full field support, TOTP handling, and intelligent mapping.
 
-You must have **GnuPG** installed to utilize this module.
-
-You can find more information on installing and configuring GnuPG on their website, [gnupg.org](https://www.gnupg.org/).
-
-## Installation
-
-The package is not available on PyPI due to build issues with some packages. You will have to download the source, install the virtual environment, and run it locally.
-
-## How To Use
-
-Open a terminal window and navigate to where your Proton Pass PGP file is located.
-
-Once in the directory, run
-```sh
-python3 -m proton_to_keepass
-```
-
-You can optionally pass in the file directly via the `-p` flag:
-
-```
-python3 -m proton_to_keepass -p this-is-your-file.pgp
-```
+> This is a heavily modified fork of the original project [cadomac/Proton-To-KeePass](https://github.com/cadomac/Proton-To-KeePass). It fixes major bugs, improves compatibility, and ensures **ALL data** from Proton Pass exports is safely migrated into KeePass.
 
 ---
 
-You will be prompted for the following:
-- Path to your GnuPG binary
-- Path to your encrypted (`.pgp`) Proton Pass export file (if you didn't enter it in the arguments)
-- Passkey to the Proton Pass encrypted file in order to decrypt it 
-  - *Only decrypted during processing, decrypted contents are never written to filesystem*
-- KeePass Database (KDBX) filename
-- Target directory to write KDBX
-- Passkey for new KDBX directory
-- Whether you would like to merge your vaults into one root directory
-- Whether you would like to export your TOTP codes to a separate KDBX
-  - If you opt to do this, you will be prompted for the following:
-    - TOTP KDBX filename
-    - Target directory to write TOTP KDBX
-    - Passkey for TOTP KDBX
+## 🚀 Features
 
-Once all of the necessary information is entered, the Proton Pass file will be decrypted and the entries will be converted and written *directly* into a new KDBX file! No plaintext touching the filesystem!
-
-## Caveats
-- KDBX only supports one "main" URL per entry, so additional URLs will be written into a custom field titled "Additional URLs"
-- If duplicates are found (e.g. same entry name), they will be added in with a timestamp appended in order to create a unique entry name and preserve any alternate credentials.
-- It is technically possible to create KDBX databases without passkeys. ***I strongly advise against this***.
-
-## Reference
-
-### Flags
-
-`-p, --path <path>`
-
-Pass path to `pgp` file directly into script from command line.
+✅ Converts Proton Pass `.pgp` export to KeePass `.kdbx`  
+✅ Fully preserves **usernames**, including fallback to `"email"`, `"login"`, `"Email (aliases)"`  
+✅ Preserves all **custom fields** like `"IP Address"`, `"alias email"`, etc., into KeePass custom properties  
+✅ Converts and extracts **TOTP/2FA secrets** from `otpauth://` URIs  
+✅ Automatically handles **duplicate entries** with safe timestamps  
+✅ Saves original **creation & modification timestamps**  
+✅ Merges or separates vaults into folders  
+✅ Optionally separates TOTP entries into a dedicated KeePass file  
+✅ Supports PGP via GnuPG CLI  
+✅ Outputs sanitized, XML-compatible values (no more `NULL byte` or XPath crashes)  
+✅ Saves a debug version of the decrypted vault to assist with troubleshooting
 
 ---
 
-`-v, --version`
+## 📦 Installation
 
-Print the module version.
+### 🔧 Requirements
 
----
+- Python 3.8+
+- GnuPG (CLI)
+- KeePass-compatible software (e.g. KeePassXC)
+- `pip install -r requirements.txt`
 
-`-vb, --verbose`
-
-Enable extra processing logs to show active progress.
+### Install dependencies:
+```bash
+pip install -r requirements.txt
